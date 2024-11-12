@@ -14,6 +14,7 @@ public class ScreenBase : MonoBehaviour
 {
     public ScreenType screenType;
     public List<Transform> listOfObjects;
+    public List<Typper> listOfTexts;
     public bool startHidden = false;
 
     [Header("Animation")]
@@ -42,6 +43,14 @@ public class ScreenBase : MonoBehaviour
             obj.gameObject.SetActive(true);
             obj.DOScale(Vector3.zero, animationDuration).From().SetDelay(i * delayBetweenObjects);
         }
+
+        Invoke(nameof(ShowTexts), delayBetweenObjects * listOfObjects.Count);
+    }
+
+    private void ShowTexts() {
+        for (int i = 0; i < listOfTexts.Count; i++) {
+            listOfTexts[i].StartType();
+        }
     }
 
     private void ForceShowObjects() {
@@ -50,9 +59,5 @@ public class ScreenBase : MonoBehaviour
 
     private void HideObjects() {
         listOfObjects.ForEach(obj => obj.gameObject.SetActive(false));
-        //for (int i = 0; i < listOfObjects.Count; i++) {
-        //    Transform obj = listOfObjects[i];
-        //    obj.DOScale(Vector3.zero, animationDuration).SetDelay(i * delayBetweenObjects).OnComplete(() => obj.gameObject.SetActive(false));
-        //}
     }
 }
