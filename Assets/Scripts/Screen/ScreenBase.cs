@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public enum ScreenType {
     Panel,
@@ -16,6 +17,7 @@ public class ScreenBase : MonoBehaviour
     public List<Transform> listOfObjects;
     public List<Typper> listOfTexts;
     public bool startHidden = false;
+    public Image uiBackground;
 
     [Header("Animation")]
     public float delayBetweenObjects = 0.05f;
@@ -28,12 +30,12 @@ public class ScreenBase : MonoBehaviour
     }
 
     [Button]
-    protected virtual void Show() {
+    public virtual void Show() {
         ShowObjects();
     }
 
     [Button]
-    protected virtual void Hide() {
+    public virtual void Hide() {
         HideObjects();
     }
 
@@ -44,6 +46,7 @@ public class ScreenBase : MonoBehaviour
             obj.DOScale(Vector3.zero, animationDuration).From().SetDelay(i * delayBetweenObjects);
         }
 
+        uiBackground.enabled = true;
         Invoke(nameof(ShowTexts), delayBetweenObjects * listOfObjects.Count);
     }
 
@@ -54,10 +57,12 @@ public class ScreenBase : MonoBehaviour
     }
 
     private void ForceShowObjects() {
+        uiBackground.enabled = true;
         listOfObjects.ForEach(obj => obj.gameObject.SetActive(true));
     }
 
     private void HideObjects() {
         listOfObjects.ForEach(obj => obj.gameObject.SetActive(false));
+        uiBackground.enabled = false;
     }
 }

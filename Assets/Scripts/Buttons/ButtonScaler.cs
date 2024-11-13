@@ -12,7 +12,7 @@ public class ButtonScaler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private Vector3 originalScale;
     private Tween currentTween;
 
-    private void Start() {
+    private void Awake() {
         originalScale = transform.localScale;
     }
 

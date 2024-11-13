@@ -25,4 +25,8 @@ public class Typper : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenCharacters);
         }
     }
+
+    public void HideTexts() {
+        textMeshPro.text = "";
+    }
 }
