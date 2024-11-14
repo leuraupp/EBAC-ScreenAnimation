@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 
 public enum ScreenType {
+    Main,
     Panel,
     Info_Panel,
     Shop
@@ -46,7 +47,10 @@ public class ScreenBase : MonoBehaviour
             obj.DOScale(Vector3.zero, animationDuration).From().SetDelay(i * delayBetweenObjects);
         }
 
-        uiBackground.enabled = true;
+        if (uiBackground) {
+            uiBackground.enabled = true;
+        }
+        
         Invoke(nameof(ShowTexts), delayBetweenObjects * listOfObjects.Count);
     }
 
@@ -57,12 +61,17 @@ public class ScreenBase : MonoBehaviour
     }
 
     private void ForceShowObjects() {
-        uiBackground.enabled = true;
+        if (uiBackground) {
+            uiBackground.enabled = true;
+        }
+        
         listOfObjects.ForEach(obj => obj.gameObject.SetActive(true));
     }
 
     private void HideObjects() {
         listOfObjects.ForEach(obj => obj.gameObject.SetActive(false));
-        uiBackground.enabled = false;
+        if (uiBackground) {
+            uiBackground.enabled = false;
+        }
     }
 }
